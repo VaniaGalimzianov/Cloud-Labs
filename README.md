@@ -3,4 +3,4 @@
 Выполняют:<br />
 * [Галимзянов Иван](https://github.com/VaniaGalimzianov)
 * [Озеров Антон](https://github.com/AlexMarticus)
-* [Черняховский Илья](https://github.com/)
+* [Черняховский Илья](https://github.com/IlyaChern12)
