@@ -1,0 +1,28 @@
+networks:
+  dev:
+
+services:
+  nginx:
+    image: nginx:stable-alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - './nginx.conf:/etc/nginx/nginx.conf'
+    depends_on:
+      - project_1
+      - project_2
+    networks:
+      - dev
+
+  project_1:
+    build:
+      context: ./first_project
+    networks:
+      - dev
+
+  project_2:
+    build:
+      context: ./second_project
+    networks:
+      - dev
