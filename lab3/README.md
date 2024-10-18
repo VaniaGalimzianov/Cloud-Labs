@@ -43,3 +43,8 @@ CI/CD (Continuous Integration, Continuous Delivery — непрерывная и
 
 ## Выводы
 По итогам выполнения лабораторной работы были написан "Плохой" и "Хороший" CI/CD файлы и изучены различные bad practices в их написании. Установлено, что отсутствие подобных ошибок позволяет ускорить сборку, исключить некорректное и нестабильное поведение, оптимизировать используемые ресурсы и предоставить конечному пользователю продукт наилучшего качества. 
+
+## Источники
+1. https://appcircle.io/blog/bad-ci-cd-practices
+2. https://www.reddit.com/r/devsecops/comments/x1ye1o/cicd_bad_practices_best_practices_mistakes/
+3. https://habr.com/ru/articles/564548/
