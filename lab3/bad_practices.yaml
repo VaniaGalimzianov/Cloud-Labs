@@ -1,0 +1,42 @@
+name: CI/CD with Bad Practices
+
+on: [push]
+
+jobs:
+  build:
+    # 1. Использование последней версии при запуске
+    runs-on: ubuntu-latest
+
+    steps:
+      # 2. Клонирование репозитория без указания ветки
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # 3. Установка зависимостей без кэша
+      - name: Install deps
+        run: npm install
+
+      # 4. Ошибки линтера не прерывают сборку
+      - name: Run lint
+        run: eslint . || true
+
+      # 5. Тесты выполняются, но результат игнорируется
+      - name: Run tests
+        run: npm test || echo "Tests failed"
+
+      # 6. Секретный ключ представлен в явном виде
+      - name: Deploy with secret
+        run: scp -r ./build user@production-server:/var/www/app
+        env:
+          PASSWORD: "myunsafetypassword"
+
+      # 7. Выполнение тяжелых задач без распараллеливания
+      - name: Build front
+        run: npm run build-frontend
+
+      - name: Build back
+        run: npm run build-backend
+
+      - name: Run integration tests
+        run: npm run integration-tests
+      # 8. Наличие единственной задачи (как следствие отстутствие зависимостей между ними)

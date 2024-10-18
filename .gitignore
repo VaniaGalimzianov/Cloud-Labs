@@ -285,3 +285,6 @@ first_project/app/api/__pycache__/
 second_project/__pycache__/
 second_project/app/__pycache__/
 second_project/app/api/__pycache__/
+
+# MacOS
+.DS_Store
