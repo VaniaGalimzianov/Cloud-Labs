@@ -1,0 +1,78 @@
+name: Good CI/CD Pipeline
+
+# 2. Указаны ветки, для которых работает пайплайн
+on:
+  push:
+    branches:
+      - main
+      - develop
+      - release
+
+jobs:
+  build:
+    # 1. Используем конкретную версию Ubuntu для стабильности
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # 3. Кеширование зависимостей для ускорения сборки
+      - name: Cache deps
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install deps
+        run: npm install
+
+      # 4. Линтер прерывает сборку при ошибках
+      - name: Run linter
+        run: eslint .
+
+      # 5. Тесты прерывают сборку при неудаче
+      - name: Run tests
+        run: npm test
+
+  # 6. Параллельные задачи для требовательных шагов
+  build_front:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install deps
+        run: npm install
+
+      - name: Build front
+        run: npm run build-frontend
+
+  build_back:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install deps
+        run: npm install
+
+      - name: Build back
+        run: npm run build-backend
+
+  integration_tests:
+    runs-on: ubuntu-20.04
+    # 7. Установление зависимостей между задачами (Запуск тестов только после сборки)
+    needs: [build_front, build_back]  
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install deps
+        run: npm install
+
+      - name: Run integration tests
+        run: npm run integration-tests
+
