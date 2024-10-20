@@ -1,11 +1,34 @@
 ## Лабораторная работа №2. Docker
 Цель второй лабораторной работы - ознакомление с принципами написания `Dockerfile`. Будут рассмотрены плохие практики написания файла, а затем они будут исправлены. Кроме того, будут изучены случаи, когда даже правильно написанный `Dockerfile` может привести к проблемам.
 
+### Структура проекта
+Для выполнения данной лабораторной работы был создан простой `FastApi` проект:
+```bash
+/root/itmo/fastapi_project
+├── Dockerfile
+├── app
+│   ├── __init__.py
+│   └── app.py
+└── requirements.txt
+```
+Содержимое файла `app/app.py` выглядит следующим образом:
+![app.py](https://github.com/VaniaGalimzianov/Cloud-Labs/blob/main/lab2/main.png)
+Рисунок 1 - Содержимое файла `app.py`
+
+Далее будут рассмотрены случаи написания Dockerfile и их запуск.
+
 ### Плохой Dockerfile
 В файле [bad_docker/Dockerfile](https://github.com/VaniaGalimzianov/Cloud-Labs/blob/main/lab2/bad_docker/Dockerfile) приведен пример некорректно написанного файла. Его недостатки заключаются в следующем:
 * Отсутствие четкой версии `Python`
 * Копирование всех файлов без учета структуры проекта и игнорирования лишних файлов
 * Установка зависимостей напрямую без создания виртуального окружения
+
+![bad docker](https://github.com/VaniaGalimzianov/Cloud-Labs/blob/main/lab2/плохой_докер.png)
+Рисунок 2 - Некорректный Dockerfile
+
+При запуске данного файла появлялись ошибки, и сборка занимала довольно большое время - 47.8с (рисунок 3).
+![bad docker build](https://github.com/VaniaGalimzianov/Cloud-Labs/blob/main/lab2/сборка_плохого_докера.png)
+Рисунок 3 - Сборка некорректного Dockerfile
 
 ### Исправленный Dockerfile
 В файле [good_docker/Dockerfile](https://github.com/VaniaGalimzianov/Cloud-Labs/blob/main/lab2/good_docker/Dockerfile) приведен пример исправленного файла. Его преимущества заключаются в следующем:
@@ -13,6 +36,16 @@
 * Установлена рабочая директория для лучшей организации файлов
 * Копируются только необходимые файлы для установки зависимости
 * Устанавливаются зависимости с флагом `--no-cache-dir`, что уменьшает размер образа
+
+![good docker](https://github.com/VaniaGalimzianov/Cloud-Labs/blob/main/lab2/хороший_докер.png)
+Рисунок 4 - Исправленный Dockerfile
+
+Запуск данного файла занимает намного меньше времени, не вызывает ошибок и корректно отображает содержимое по адресу `127.0.0.1`(рисунок 5).
+![good docker build](https://github.com/VaniaGalimzianov/Cloud-Labs/blob/main/lab2/сборка_плохого_докера.png)
+Рисунок 5 - Сборка исправленного Dockerfile
+
+![app.py](https://github.com/VaniaGalimzianov/Cloud-Labs/blob/main/lab2/результат.png)
+Рисунок 6 - Отображение содержимого в браузере
 
 ### Bad practices по работе с контейнерами
 1. **Запуск контейнеров с правами суперпользователя** (`root`)
