@@ -13,6 +13,7 @@
 ```
 Содержимое файла `app/app.py` выглядит следующим образом:
 ![app.py](https://github.com/VaniaGalimzianov/Cloud-Labs/blob/main/lab2/main.png)
+
 Рисунок 1 - Содержимое файла `app.py`
 
 Далее будут рассмотрены случаи написания Dockerfile и их запуск.
@@ -24,10 +25,12 @@
 * Установка зависимостей напрямую без создания виртуального окружения
 
 ![bad docker](https://github.com/VaniaGalimzianov/Cloud-Labs/blob/main/lab2/плохой_докер.png)
+
 Рисунок 2 - Некорректный Dockerfile
 
 При запуске данного файла появлялись ошибки, и сборка занимала довольно большое время - 47.8с (рисунок 3).
 ![bad docker build](https://github.com/VaniaGalimzianov/Cloud-Labs/blob/main/lab2/сборка_плохого_докера.png)
+
 Рисунок 3 - Сборка некорректного Dockerfile
 
 ### Исправленный Dockerfile
@@ -38,13 +41,16 @@
 * Устанавливаются зависимости с флагом `--no-cache-dir`, что уменьшает размер образа
 
 ![good docker](https://github.com/VaniaGalimzianov/Cloud-Labs/blob/main/lab2/хороший_докер.png)
+
 Рисунок 4 - Исправленный Dockerfile
 
-Запуск данного файла занимает намного меньше времени, не вызывает ошибок и корректно отображает содержимое по адресу `127.0.0.1`(рисунок 5).
+Запуск данного файла занимает намного меньше времени, не вызывает ошибок и корректно отображает содержимое по адресу `127.0.0.1` (рисунок 5).
 ![good docker build](https://github.com/VaniaGalimzianov/Cloud-Labs/blob/main/lab2/сборка_плохого_докера.png)
+
 Рисунок 5 - Сборка исправленного Dockerfile
 
 ![app.py](https://github.com/VaniaGalimzianov/Cloud-Labs/blob/main/lab2/результат.png)
+
 Рисунок 6 - Отображение содержимого в браузере
 
 ### Bad practices по работе с контейнерами
