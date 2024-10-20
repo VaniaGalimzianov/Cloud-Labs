@@ -45,7 +45,7 @@
 Рисунок 4 - Исправленный Dockerfile
 
 Запуск данного файла занимает намного меньше времени, не вызывает ошибок и корректно отображает содержимое по адресу `127.0.0.1` (рисунок 5).
-![good docker build](https://github.com/VaniaGalimzianov/Cloud-Labs/blob/main/lab2/сборка_плохого_докера.png)
+![good docker build](https://github.com/VaniaGalimzianov/Cloud-Labs/blob/main/lab2/сборка_хорошего_докера.png)
 
 Рисунок 5 - Сборка исправленного Dockerfile
 
