@@ -49,9 +49,14 @@
 
 Рисунок 5 - Сборка исправленного Dockerfile
 
-![app.py](https://github.com/VaniaGalimzianov/Cloud-Labs/blob/main/lab2/результат.png)
+После сборки контейнер был запущен
+![running](https://github.com/VaniaGalimzianov/Cloud-Labs/blob/main/lab2/запуск.png)
 
-Рисунок 6 - Отображение содержимого в браузере
+Рисунок 6 - Запуск контейнера
+
+![result](https://github.com/VaniaGalimzianov/Cloud-Labs/blob/main/lab2/результат.png)
+
+Рисунок 7 - Отображение содержимого в браузере
 
 ### Bad practices по работе с контейнерами
 1. **Запуск контейнеров с правами суперпользователя** (`root`)
