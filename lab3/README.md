@@ -32,7 +32,7 @@ CI/CD (Continuous Integration, Continuous Delivery — непрерывная и
 ### UPD: Запуск "Плохого" CI/CD файла
 После написания CI/CD файла он был помещен в созданную в проекте-примере директорию .github/workflows. Изменения были закоммичены и отправлены в удаленный репозиторий. По исполнению команды `git push` началась работа CI/CD файла. Скрин пайплайна и процесса исполнения команды приведены на рисунках ниже:
 <img width="1148" alt="Screenshot 2024-11-20 at 21 02 48" src="https://github.com/user-attachments/assets/d8290541-1b7d-4a3d-99be-2badbaebbe7c">
-<img width="1148" alt="Screenshot 2024-11-20 at 21 02 48" src="https://github.com/user-attachments/assets/cf219aad-2d3d-4620-9a1d-0e6918556ab9">
+<img width="1143" alt="Screenshot 2024-11-20 at 21 03 22" src="https://github.com/user-attachments/assets/aeb9401e-64f3-4b83-96fc-5c81943c6e32">
 
 
 ## Создание "Хорошего" CI/CD файла
