@@ -37,8 +37,9 @@ CI/CD (Continuous Integration, Continuous Delivery — непрерывная и
 
 ## Создание "Хорошего" CI/CD файла
 На рисунке ниже представлен исправленный код CI/CD файла, в котором исключены bad practices, описанные ранее:
-<img width="856" alt="Снимок экрана 2024-10-18 в 20 04 37" src="https://github.com/user-attachments/assets/62546c73-3b97-445e-8122-4eadb3ad9419">
-<img width="853" alt="Снимок экрана 2024-10-18 в 20 05 08" src="https://github.com/user-attachments/assets/47aa439a-1df5-4341-b37c-c24b8beaef3d">
+<img width="799" alt="Screenshot 2024-11-28 at 23 09 36" src="https://github.com/user-attachments/assets/a2eaa531-01ee-4fc6-9e74-daa275208dd3">
+<img width="825" alt="Screenshot 2024-11-28 at 23 09 44" src="https://github.com/user-attachments/assets/fc9816b5-55a6-4526-9c86-a922bf9c6355">
+<img width="772" alt="Screenshot 2024-11-28 at 23 10 40" src="https://github.com/user-attachments/assets/26aad33e-d217-4fa4-a379-69f732bce2b8">
 1. Вместо использования последней версии дистрибутива зафиксирована конкретная - `ubuntu-20.04`. Теперь пайплайна будет более стабильной и перестанет зависить от совместимостей сервисов с последней версией операционнной системы;
 2. В начале файла указаны ветки, для которых выполняется пайплайн. Это исключает возможность непредвиденного исполнения скрипта в непредназначенных для этого ветках;
 3. Для загрузки зависимостей теперь используется кэширование с целью уменьшения времени выполнения;
