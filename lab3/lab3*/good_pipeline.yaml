@@ -1,0 +1,184 @@
+name: Good CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+      - release
+# 2. Указаны ветки, для которых работает скрипт
+
+jobs:
+  # UPD: изменено название задачи на более подходящее
+  lint_and_test:
+    # 1. Используем конкретную версию Ubuntu для стабильности
+    runs-on: ubuntu-20.04
+    permissions:
+      id-token: write
+      contents: read
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install Vault
+        run: |
+          curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo tee /etc/apt/trusted.gpg.d/hashicorp.asc
+          sudo apt-add-repository "deb https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+          sudo apt update
+          sudo apt install -y vault
+        
+      - name: Configure OIDC
+        env:
+          VAULT_ADDR: ${{ secrets.VAULT_ADDR }}
+        run: |
+          echo "Запрос OIDC токена"
+          echo "Vault URL: ${VAULT_ADDR}/v1/auth/oidc/login"
+          vault_token=$(curl --request POST \
+            --data '{"role":"github"}' \
+            --header "Authorization: Bearer $ACTIONS_ID_TOKEN" \
+            "${VAULT_ADDR}/v1/auth/oidc/login" | jq -r '.auth.client_token')
+
+          echo "VAULT_TOKEN=${vault_token}" >> $GITHUB_ENV
+          
+      - name: Fetch secrets from Vault
+        env:
+          VAULT_ADDR: ${{ secrets.VAULT_ADDR }}
+          VAULT_TOKEN: ${{ env.VAULT_TOKEN }}
+        run: |
+          echo "Получение секретов..."
+          
+          if [[ -n "$DB_HOST" && -n "$DB_USER" && -n "$DB_PASSWORD" && -n "$DB_NAME" ]]; then
+              echo "Все секреты успешно получены!"
+              echo "DB_HOST=$DB_HOST" >> $GITHUB_ENV 
+              echo "DB_USER=$DB_USER" >> $GITHUB_ENV
+              echo "DB_PASSWORD=$DB_PASSWORD" >> $GITHUB_ENV 
+              echo "DB_NAME=$DB_NAME" >> $GITHUB_ENV
+          else
+              echo "Ошибка получения одного или нескольких секретов." >&2
+              exit 1
+          fi
+          
+          export DB_HOST=$(vault kv get -field=DB_HOST secret/app-config)
+          export DB_USER=$(vault kv get -field=DB_USER secret/app-config) 
+          export DB_PASSWORD=$(vault kv get -field=DB_PASSWORD secret/app-config) 
+          export DB_NAME=$(vault kv get -field=DB_NAME secret/app-config)
+          
+      - name: Connect to the database
+        run: |
+          echo "Подключение к базе данных..."
+          export DATABASE_URL="postgresql://$DB_USER:$DB_PASSWORD@$DB_HOST/$DB_NAME"
+          echo "Подключаемся к базе данных с URL: $DATABASE_URL"
+          psql $DATABASE_URL -c "SELECT 1"
+
+        # 3. Кеширование зависимостей для ускорения сборки
+      - name: Cache deps
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install deps
+        run: npm install
+
+        # 4. Линтер прерывает сборку при ошибках
+      - name: Run linter
+        run: eslint .
+
+        # 5. Тесты прерывают сборку при неудаче
+      - name: Run tests
+        run: npm test
+
+  # 6. Параллельные задачи для требовательных шагов
+  build_front:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+        # UPD: добавлено кэширование зависимостей в остальные jobs
+      - name: Cache deps
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install deps
+        run: npm install
+
+      - name: Build front
+        run: npm run build-frontend
+
+        # UPD: добавлена загрузка артефактов из build_front
+      - name: Upload frontend build artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: frontend-build
+          path: ./path/to/frontend/build
+
+  build_back:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+        # UPD: добавлено кэширование зависимостей в остальные jobs
+      - name: Cache deps
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install deps
+        run: npm install
+
+      - name: Build back
+        run: npm run build-backend
+
+        # UPD: добавлена загрузка артефактов из build_back
+      - name: Upload backend build artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: backend-build
+          path: ./path/to/backend/build
+
+  integration_tests:
+    runs-on: ubuntu-20.04
+    # 7. Установление зависимостей между задачами (Запуск тестов только после сборки)
+    needs: [build_front, build_back]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+        # UPD: добавлена выгрузка артефактов из build_front
+      - name: Download frontend build artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: frontend-build
+
+        # UPD: добавлена выгрузка артефактов из build_back
+      - name: Download backend build artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: backend-build
+
+      # UPD: добавлено кэширование зависимостей в остальные jobs
+      - name: Cache deps
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+            
+      - name: Install deps
+        run: npm install
+
+      - name: Run integration tests
+        run: npm run integration-tests
