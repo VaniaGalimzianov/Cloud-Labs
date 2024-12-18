@@ -13,6 +13,7 @@ jobs:
   lint_and_test:
     # 1. Используем конкретную версию Ubuntu для стабильности
     runs-on: ubuntu-20.04
+    # разрешения на работу с токенами и данными
     permissions:
       id-token: write
       contents: read
@@ -20,50 +21,34 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-
-      - name: Install Vault
-        run: |
-          curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo tee /etc/apt/trusted.gpg.d/hashicorp.asc
-          sudo apt-add-repository "deb https://apt.releases.hashicorp.com $(lsb_release -cs) main"
-          sudo apt update
-          sudo apt install -y vault
         
-      - name: Configure OIDC
-        env:
-          VAULT_ADDR: ${{ secrets.VAULT_ADDR }}
-        run: |
-          echo "Запрос OIDC токена"
-          echo "Vault URL: ${VAULT_ADDR}/v1/auth/oidc/login"
-          vault_token=$(curl --request POST \
-            --data '{"role":"github"}' \
-            --header "Authorization: Bearer $ACTIONS_ID_TOKEN" \
-            "${VAULT_ADDR}/v1/auth/oidc/login" | jq -r '.auth.client_token')
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-          echo "VAULT_TOKEN=${vault_token}" >> $GITHUB_ENV
-          
-      - name: Fetch secrets from Vault
-        env:
-          VAULT_ADDR: ${{ secrets.VAULT_ADDR }}
-          VAULT_TOKEN: ${{ env.VAULT_TOKEN }}
+      # Используем HashiCorp Vault Action для аутентификации и получения секретов
+      - name: Login to Vault and fetch secrets
+        uses: hashicorp/vault-action@v2
+        with:
+          url: ${{ secrets.VAULT_ADDR }}
+          method: oidc
+          role: github
+        id: vault-login
+
+      # Считываем секреты из Vault
+      - name: Fetch secrets
         run: |
           echo "Получение секретов..."
-          
-          if [[ -n "$DB_HOST" && -n "$DB_USER" && -n "$DB_PASSWORD" && -n "$DB_NAME" ]]; then
-              echo "Все секреты успешно получены!"
-              echo "DB_HOST=$DB_HOST" >> $GITHUB_ENV 
-              echo "DB_USER=$DB_USER" >> $GITHUB_ENV
-              echo "DB_PASSWORD=$DB_PASSWORD" >> $GITHUB_ENV 
-              echo "DB_NAME=$DB_NAME" >> $GITHUB_ENV
-          else
-              echo "Ошибка получения одного или нескольких секретов." >&2
-              exit 1
-          fi
-          
           export DB_HOST=$(vault kv get -field=DB_HOST secret/app-config)
-          export DB_USER=$(vault kv get -field=DB_USER secret/app-config) 
-          export DB_PASSWORD=$(vault kv get -field=DB_PASSWORD secret/app-config) 
+          export DB_USER=$(vault kv get -field=DB_USER secret/app-config)
+          export DB_PASSWORD=$(vault kv get -field=DB_PASSWORD secret/app-config)
           export DB_NAME=$(vault kv get -field=DB_NAME secret/app-config)
-          
+
+          echo "DB_HOST=$DB_HOST" >> $GITHUB_ENV
+          echo "DB_USER=$DB_USER" >> $GITHUB_ENV
+          echo "DB_PASSWORD=$DB_PASSWORD" >> $GITHUB_ENV
+          echo "DB_NAME=$DB_NAME" >> $GITHUB_ENV
+
+      # Подключение к базе данных
       - name: Connect to the database
         run: |
           echo "Подключение к базе данных..."
