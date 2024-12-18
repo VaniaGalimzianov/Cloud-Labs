@@ -21,10 +21,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-        
-      - name: Checkout code
-        uses: actions/checkout@v3
-
+      
       # Используем HashiCorp Vault Action для аутентификации и получения секретов
       - name: Login to Vault and fetch secrets
         uses: hashicorp/vault-action@v2
