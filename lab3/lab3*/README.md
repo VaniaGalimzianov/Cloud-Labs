@@ -85,7 +85,7 @@ vault write auth/jwt/role/github \
 <img width="1499" alt="Screenshot 2024-12-13 at 00 02 12" src="https://github.com/user-attachments/assets/e9743e69-1415-49e7-9f92-92a8a5f72bf8" />
 
 ## UPD: Результат после исправлений
-<img width="1492" alt="Screenshot 2024-12-19 at 03 12 25" src="https://github.com/user-attachments/assets/c599a7e7-dbce-4047-a1d3-84f8ab8b47ee" />
+<img width="1495" alt="Screenshot 2024-12-19 at 03 18 06" src="https://github.com/user-attachments/assets/6cb68cee-4712-4c8a-ba9d-25f7a9e98fe0" />
 
 
 ## Чем хорош выбранный способ?
