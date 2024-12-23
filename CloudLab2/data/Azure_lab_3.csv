@@ -1,0 +1,51 @@
+IT Tower,Service Family,Service Type,Service Sub Type,Service Usage Type,Meter Category,Meter Sub-Category,Meter Name,Consumed Service
+Data Services,Data Services,Data Services,Data Services,Data Services,Data Services,,,
+Database,Database,Database management service,Data Warehouse,Database management,SQL Data Warehouse,Compute Optimized%,100 DWUs,Microsoft.Sql
+Storage,Storage&Content Delivery,Storage,Storage Data Transfer Out,Data Transfer Usage,Windows Azure - All Services,All,Data Transfer Out%,Microsoft.Storage
+Networking,Networking,Gateway,VPN Gateway,Gateway Usage,VPN Gateway,,%Gateway%,Microsoft.Network
+Networking,Networking,Gateway,VPN Gateway,Gw,VPN Gateway,,%Gw%,Microsoft.Network
+Networking,Networking,Gateway,VPN Gateway,Data Transfer,VPN Gateway,,%Data Transfer%,Microsoft.Network
+Cloud service,Developer Tools,Execution,Function Execution,Compute,Functions,,%Execution%,Microsoft.Web
+Cloud service,Developer Tools,Duration,Function Duration,Compute,Functions,,%Duration,Microsoft.Web
+Cloud service,Analytics,Node,Data Included per Node,Data Inclusion,Insight and Analytics,,Data Included per Node,microsoft.operationalinsights
+Cloud service,Analytics,Node,Data Overage per Node,Data Overage Usage,Insight and Analytics,,Data Overage per Node,microsoft.operationalinsights
+Cloud service,Analytics,Node,Node,Node Usage,Insight and Analytics,,Node,microsoft.operationalinsights
+Cloud service,Security and Indentity,Vault,Key Vault,Vault Usage,Key Vault,,,Microsoft.KeyVault
+Cloud service,Developer Tools,Integration,Integration,Integration Usage,Integration,,,
+Cloud service,Developer Tools,Cloud Platform,Workflow Cloud Platform,Workflow Usage,Logic Apps,,,Microsoft.Logic
+Cloud service,Artificial Intelligence,Machine Learning Service,Model Management,Management Usage,Machine Learning Service,Model Management,%Tier,Microsoft.MachineLearningModelManagement
+Cloud service,Artificial Intelligence,MachineLearning,Standard Workspace fee,MachineLearning Usage,Machine Learning Studio,,Standard Workspace fee,Microsoft.MachineLearning
+Cloud service,Artificial Intelligence,MachineLearning,MachineLearning Compute,MachineLearning Usage,Machine Learning Studio,,Standard Experiment Compute,Microsoft.MachineLearning
+Cloud service,Artificial Intelligence,API Services,ML API Services,Text Analytics,ML API Services,Text Analytics,Free,Microsoft.CognitiveServices
+Cloud service,Artificial Intelligence,API Services,ML API Services,Standard Emotion API,ML API Services,ML API Services,Standard Emotion API%,Microsoft.CognitiveServices
+Cloud service,Mobile Services,Services,Mobile Services,Services Usage,Mobile Services,Mobile Services,Free Mobile Services,
+Cloud service,Management Tools,Traffic Manager,Azure Endpoint Traffic Manager,Traffic Manager Usage,Traffic Manager,,%Azure Endpoint%,Microsoft.Network
+Cloud service,Management Tools,Traffic Manager,Service Endpoint Traffic Manager,Traffic Manager Usage,Traffic Manager,,%Service Endpoint%,Microsoft.Network
+Cloud service,Management Tools,Traffic Manager,DNS Queries Traffic Manager,Traffic Manager Usage,Traffic Manager,,%DNS Queries%,Microsoft.Network
+Cloud service,Management Tools,Traffic Manager,Real User Measurements Traffic Manager,Traffic Manager Usage,Traffic Manager,,%Real User Measurements,Microsoft.Network
+Cloud service,Management Tools,Traffic Manager,Traffic View Traffic Manager,Traffic Manager Usage,Traffic Manager,,%Traffic View%,Microsoft.Network
+Cloud service,Security and Identity,Firewall,Azure Firewall,Deployment,Azure Firewall,,Deployment,Microsoft.Network
+Cloud service,Security and Identity,Firewall,Azure Firewall,Data Processed,Azure Firewall,,Data Processed,Microsoft.Network
+Cloud service,Enterprise Applications,Recovery Services,Site Recovery,VM Eplicated,Azure Site Recovery,,VM _eplicated to Azure,Microsoft.RecoveryServices
+Cloud service,Artificial Intelligence,Cognitive Services,QnA Maker,Cognitive Services Usage,Cognitive Services,QnA Maker,,Microsoft.CognitiveServices
+Cloud service,Developer Tools,SignalR,SignalR Service,SignalR Usage,SignalR,,,Microsoft.SignalRService
+Cloud service,Application Services,Event Grid,Event Grid Operations,Event Grid Usage,Event Grid,,Operations,
+Cloud service,Developer Tools,Services,Media Services,Services Usage,Media Services,,,microsoft.media
+Cloud service,Internet of Things,Hub,IoT Hub,Hub Usage,IoT Hub,,,Microsoft.Devices
+Cloud service,Application Services,Virtual Machines,Virtual Machines Batch,Virtual Machines Usage,Virtual Machines,,,Microsoft.Batch
+Compute,Compute,Virtual Machines,A Series Basic,Compute,Virtual Machines,A Series Basic%,,%Compute
+Compute,Compute,Virtual Machines,A,Compute,Virtual Machines,A%,,%Compute
+Compute,Compute,Virtual Machines,B,Compute,Virtual Machines,B%,,%Compute
+Compute,Compute,Virtual Machines,D D1/,Compute,Virtual Machines,D%,D1/%,%Compute
+Compute,Compute,Virtual Machines,D D1 ,Compute,Virtual Machines,D%,D1 %,%Compute
+Compute,Compute,Virtual Machines,D D1,Compute,Virtual Machines,D%,D1%,%Compute
+Compute,Compute,Virtual Machines,D D,Compute,Virtual Machines,D%,D%,%Compute
+Compute,Compute,Virtual Machines,E,Compute,Virtual Machines,E%,,%Compute
+Compute,Compute,Virtual Machines,F,Compute,Virtual Machines,F%,,%Compute
+Compute,Compute,Virtual Machines,F4,Compute,Virtual Machines,Standard_F4 VM (Windows),Compute Hours,%Compute
+Compute,Compute,Virtual Machines,G,Compute,Virtual Machines,G%,,%Compute
+Compute,Compute,Virtual Machines,H,Compute,Virtual Machines,H%,,%Compute
+Compute,Compute,Virtual Machines,L,Compute,Virtual Machines,L%,,%Compute
+Compute,Compute,Virtual Machines,M,Compute,Virtual Machines,M%,,%Compute
+Compute,Compute,Virtual Machines,N,Compute,Virtual Machines,N%,,%Compute
+Compute,Compute,Virtual Machines,S,Compute,Virtual Machines,S%,,%Compute
