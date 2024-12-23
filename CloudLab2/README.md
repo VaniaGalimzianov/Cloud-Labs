@@ -35,7 +35,7 @@
 
 При определении данных характеристик использовался официальный сайт [Azure](https://azure.microsoft.com/en-us/products/ "Официальный сайт Azure"). Результат заполнения таблицы представлен на рисунке ниже:
 
-<img src="https://github.com/VaniaGalimzianov/Cloud-Labs/blob/main/CloudLab2/data/result.png" width="800" alt="Result">
+<img src="https://github.com/VaniaGalimzianov/Cloud-Labs/blob/main/CloudLab2/data/final_result.png" width="800" alt="Result">
 Рисунок 2 – Заполненная таблица
 
 ## 🌐Описание сервисов
