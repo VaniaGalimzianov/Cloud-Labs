@@ -119,4 +119,4 @@
 * **S** >> Виртуальные машины стандартного уровня для общих рабочих нагрузок.
 
 ***
-Заполненная таблица представлена [тут](https://github.com/VaniaGalimzianov/Cloud-Labs/blob/main/CloudLab2/data/Azure_lab_team%203.csv).
+Заполненная таблица представлена [тут](https://github.com/VaniaGalimzianov/Cloud-Labs/blob/main/CloudLab2/data/Azure_lab_3.csv).
